@@ -44,6 +44,7 @@ def convert_ifc_to_obj(file_path):
     subprocess.run(".\\IfcConvert.exe --use-element-guids " + ".\\" + file_path + " .\\" + in_file_path)
 # ifc转换至obj文件
 
+# 待修改 添加URL下载类库与IfcConvert
 if __name__ == '__main__':
 
     if os.path.exists(ifc_file_path) == False:

@@ -9,7 +9,7 @@
 
 ### python
 
-- ifcOpenShell
+- ifcOpenShell ifc数据解释库
 - os
 - sys
 - subprocess
