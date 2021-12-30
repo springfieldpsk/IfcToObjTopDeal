@@ -47,6 +47,11 @@ def convert_ifc_to_obj(file_path):
 # 待修改 添加URL下载类库与IfcConvert
 if __name__ == '__main__':
 
+    ifc_file_path = sys.argv[1]
+    
+    if ifc_file_path.endswith('.ifc') == False:
+        raise Exception("输入错误")
+
     if os.path.exists(ifc_file_path) == False:
         raise Exception("ifc 文件不存在")
 
@@ -84,5 +89,7 @@ if __name__ == '__main__':
 
     read_file.close()
     res_file.close()
+
+    
     
 

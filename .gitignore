@@ -1,0 +1,9 @@
+*.mtl
+*.obj
+*.zip
+*.exe
+*.ifc
+__pycache__
+build
+dist
+*.spec
