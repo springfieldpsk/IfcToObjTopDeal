@@ -17,7 +17,7 @@ except ImportError:
 in_file_path = '.\\tmp\\newPro.obj'
 out_file_path = '.\\tmp'
 out_file_name = '.\\tmp\\res.obj'
-ifc_file_path = 'newPro.ifc'
+ifc_file_path = '.\\newPro.ifc'
 
 
 def swap(t1,t2):
@@ -42,7 +42,9 @@ def guid_to_def(ifc_guid):
 # 通过ifc_guid获取定义标号
 
 def convert_ifc_to_obj(file_path):
-    subprocess.run(".\\IfcConvert.exe --use-element-guids " + ".\\" + file_path + " .\\" + in_file_path)
+    command = ".\\IfcConvert.exe --use-element-guids " + file_path + " " + in_file_path
+    print(command)
+    subprocess.run(command)
 # ifc转换至obj文件
 
 def mkdir(path):
@@ -62,6 +64,11 @@ if __name__ == '__main__':
 
     ifc_file_path = sys.argv[1]
     
+    try:
+        mkdir(out_file_path)
+    except Exception as e:
+        raise Exception("IO 错误")
+    
     if ifc_file_path.endswith('.ifc') == False:
         raise Exception("输入错误")
 
@@ -74,7 +81,6 @@ if __name__ == '__main__':
         raise Exception("文件转换失败")
 
     try:
-        mkdir(out_file_path)
         read_file = open(in_file_path, 'r')
         res_file = open(out_file_name, 'w')
         ifc_file = ifcopenshell.open(ifc_file_path)
