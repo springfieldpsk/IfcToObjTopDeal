@@ -14,8 +14,9 @@ except ImportError:
         raise Exception("Import Error")
 # 导入ifcopenshell库
 
-in_file_path = 'newPro.obj'
-out_file_path = 'res.obj'
+in_file_path = '.\\tmp\\newPro.obj'
+out_file_path = '.\\tmp'
+out_file_name = '.\\tmp\\res.obj'
 ifc_file_path = 'newPro.ifc'
 
 
@@ -44,6 +45,18 @@ def convert_ifc_to_obj(file_path):
     subprocess.run(".\\IfcConvert.exe --use-element-guids " + ".\\" + file_path + " .\\" + in_file_path)
 # ifc转换至obj文件
 
+def mkdir(path):
+
+    path = path.strip()
+    path = path.rstrip("\\")
+    isExists=os.path.exists(path)
+    if not isExists:
+        os.makedirs(path)
+        return True
+
+    else:
+        return False
+    
 # 待修改 添加URL下载类库与IfcConvert
 if __name__ == '__main__':
 
@@ -61,8 +74,9 @@ if __name__ == '__main__':
         raise Exception("文件转换失败")
 
     try:
+        mkdir(out_file_path)
         read_file = open(in_file_path, 'r')
-        res_file = open(out_file_path, 'w')
+        res_file = open(out_file_name, 'w')
         ifc_file = ifcopenshell.open(ifc_file_path)
     except Exception as e:
         raise Exception("IO 错误")
