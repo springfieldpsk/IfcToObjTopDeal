@@ -18,8 +18,9 @@ in_file_path = '.\\tmp\\newPro.obj'
 out_file_path = '.\\tmp'
 out_file_name = '.\\tmp\\res.obj'
 ifc_file_path = '.\\newPro.ifc'
+name_list_path = '.\\tmp\\namelist.txt'
 
-
+name_set = set()
 def swap(t1,t2):
     return t2,t1
 
@@ -35,6 +36,7 @@ def guid_to_def(ifc_guid):
                         if pro_perty.is_a('IfcPropertySingleValue'):
                             if pro_perty.NominalValue is not None:
                                 if pro_perty.NominalValue.is_a('IfcIdentifier'):
+                                    name_set.add(pro_perty.NominalValue.wrappedValue)
                                     return pro_perty.NominalValue.wrappedValue
         return "!cal_error"
     else:
@@ -83,6 +85,7 @@ if __name__ == '__main__':
     try:
         read_file = open(in_file_path, 'r')
         res_file = open(out_file_name, 'w')
+        name_list = open(name_list_path, 'w')
         ifc_file = ifcopenshell.open(ifc_file_path)
     except Exception as e:
         raise Exception("IO 错误")
@@ -100,6 +103,7 @@ if __name__ == '__main__':
             # print(guid_to_def(ifc_guid))
             v[1] = guid_to_def(ifc_guid)
             # 解析目标物体
+
         out_line = ""
         for t in v:
             out_line += t + ' '
@@ -107,8 +111,13 @@ if __name__ == '__main__':
 
         res_file.write(out_line)
 
+    for v in name_set:
+        print(v)
+        name_list.write(v + '\n')
+
     read_file.close()
     res_file.close()
+    name_list.close()
 
     
     
